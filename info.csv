@@ -1,9 +1,11 @@
 full_name,first_name,last_name,seat_no,subject,paper_no
-bill gates,bill,gates,A1,Bio,2
-dwayne johnson,dwayne,johnson,A2,ICT,3
-elon musk,elon,musk,A3,Econ,3
-jack ma,jack,ma,A4,Econ,1
+bill gates,bill,gates,A1,Eng,2
+dwayne johnson,dwayne,johnson,A2,Psy,3
+elon musk,elon,musk,A3,Bio,1
+jack ma,jack,ma,A4,Bio,1
 Lai Pak,Lai,Pak,A5,ICT,1
-Lok Bong,Lok,Bong,A6,Econ,3
-Mr bean,Mr,bean,A7,Maths,2
-Vasudev Karunakaran,Vasudev,Karunakaran,A8,Psy,2
+Lok Bong,Lok,Bong,A6,Eng,2
+Mr bean,Mr,bean,A7,Chin,3
+thomas ho,thomas,ho,A8,Econ,3
+Vasudev Karunakaran,Vasudev,Karunakaran,A9,Bio,3
+vienna chew,vienna,chew,A10,ICT,3
