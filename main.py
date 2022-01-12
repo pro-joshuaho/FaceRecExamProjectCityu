@@ -58,7 +58,8 @@ while True:
 
         matchIndex = np.argmin(faceDis)
 
-        if matches[matchIndex] and min(faceDis) < 0.4:
+        threshold = 0.37
+        if matches[matchIndex] and min(faceDis) < threshold:
             name = classNames[matchIndex].upper()
             y1, x2, y2, x1 = faceLoc
             print(faceDis)
@@ -72,6 +73,7 @@ while True:
                         seat_number = line['seat_no']
                         subject = line['subject']
                         paper_no = line['paper_no']
+                        room = line['room']
             y1, x2, y2, x1 = y1-20, x2+20, y2+20, x1-20
 
             # exam_details = f'{name} {chr(10)}{subject} paper{paper_no}'
@@ -80,16 +82,18 @@ while True:
             cv2.rectangle(img, (x1-150, y1), (x1, y2+20), (99,248,171), cv2.FILLED) # left box
             cv2.rectangle(img, (x1, y2-20), (x2, y2+20), (121,240,108), cv2.FILLED) # bottom box
             cv2.putText(img, name, (x1+6, y2-6), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2) # bottom text (name)
-            cv2.putText(img, f'{subject} paper {paper_no}', (x1+6, y2+10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2)
-            cv2.putText(img, "seat no:", (x1-135, y1+40), cv2.FONT_HERSHEY_SIMPLEX , 1, (0,0,0), 2)
-            cv2.putText(img, seat_number, (x1-135, y1+95), cv2.FONT_HERSHEY_SIMPLEX , 2, (0,0,0), 2) ##
+            cv2.putText(img, f'{subject} paper {paper_no}', (x1+6, y2+10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2) #bottom text (subject & paper)
+            cv2.putText(img, "Room:", (x1-135, y1+40), cv2.FONT_HERSHEY_SIMPLEX , 1, (0,0,0), 2)
+            cv2.putText(img, room, (x1-135, y1+80), cv2.FONT_HERSHEY_SIMPLEX , 1.5, (255, 190, 25), 2)
+            cv2.putText(img, "Seat:", (x1 - 135, y1 + 110), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2)
+            cv2.putText(img, seat_number, (x1 - 135, y1 + 150), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 190, 25), 2)
             markAttendance(name)
-        elif min(faceDis) > 0.4:
+        elif min(faceDis) > threshold:
             y1, x2, y2, x1 = faceLoc
             y1, x2, y2, x1 = y1 - 20, x2 + 20, y2 + 20, x1 - 20
             cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
             cv2.rectangle(img, (x1, y2 - 20), (x2, y2 + 20), (121, 240, 108), cv2.FILLED)  # bottom box
-            cv2.putText(img, "Not Recognized", (x1 + 6, y2 - 6), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255,0,0), 2)
+            cv2.putText(img, "Not Recognized", (x1 + 6, y2 - 6), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,0,0), 2)
 
     cv2.imshow('Webcam', img)
     cv2.waitKey(1)
