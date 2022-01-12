@@ -1,9 +1,9 @@
-full_name,first_name,last_name,seat_no
-bill gates,bill,gates,A1
-dwayne johnson,dwayne,johnson,A2
-elon musk,elon,musk,A3
-jack ma,jack,ma,A4
-Lai Pak,Lai,Pak,A5
-Lok Bong,Lok,Bong,A6
-Mr bean,Mr,bean,A7
-Vasudev Karunakaran,Vasudev,Karunakaran,A8
+full_name,first_name,last_name,seat_no,subject,paper_no
+bill gates,bill,gates,A1,Bio,2
+dwayne johnson,dwayne,johnson,A2,ICT,3
+elon musk,elon,musk,A3,Econ,3
+jack ma,jack,ma,A4,Econ,1
+Lai Pak,Lai,Pak,A5,ICT,1
+Lok Bong,Lok,Bong,A6,Econ,3
+Mr bean,Mr,bean,A7,Maths,2
+Vasudev Karunakaran,Vasudev,Karunakaran,A8,Psy,2

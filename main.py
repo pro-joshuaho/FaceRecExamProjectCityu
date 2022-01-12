@@ -63,18 +63,26 @@ while True:
             y1, x2, y2, x1 = faceLoc
             print(faceDis)
             seat_number = ''
+            subject = ''
+            paper_no = ''
             with open(f'{cur_path}/info.csv', 'r', newline='') as profiles:
                 csv_reader = csv.DictReader(profiles, delimiter=',')
                 for line in csv_reader:
                     if line['full_name'] == classNames[matchIndex]:
                         seat_number = line['seat_no']
-            # y1, x2, y2, x1 = y1*4, x2*4, y2*4, x1*4
+                        subject = line['subject']
+                        paper_no = line['paper_no']
+            y1, x2, y2, x1 = y1-20, x2+20, y2+20, x1-20
+
+            # exam_details = f'{name} {chr(10)}{subject} paper{paper_no}'
+            # exam_details = chr(10).join([name, f'{subject} paper {paper_no}'])
             cv2.rectangle(img, (x1, y1), (x2, y2), (0,255,0), 2)
-            cv2.rectangle(img, (x1-150, y1-20), (x1, y2+20), (99,248,171), cv2.FILLED)
-            cv2.rectangle(img, (x1, y2-20), (x2, y2+20), (121,240,108), cv2.FILLED)
+            cv2.rectangle(img, (x1-150, y1), (x1, y2+20), (99,248,171), cv2.FILLED) # left box
+            cv2.rectangle(img, (x1, y2-20), (x2, y2+20), (121,240,108), cv2.FILLED) # bottom box
             cv2.putText(img, name, (x1+6, y2-6), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2)
-            cv2.putText(img, "seat #:", (x1-130, y1+20), cv2.FONT_HERSHEY_SIMPLEX , 1, (0,0,0), 2)
-            cv2.putText(img, seat_number, (x1-130, y1+70), cv2.FONT_HERSHEY_SIMPLEX , 1, (0,0,0), 2) ##
+            cv2.putText(img, f'{subject} paper {paper_no}', (x1+6, y2+10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2)
+            cv2.putText(img, "seat no:", (x1-135, y1+40), cv2.FONT_HERSHEY_SIMPLEX , 1, (0,0,0), 2)
+            cv2.putText(img, seat_number, (x1-135, y1+95), cv2.FONT_HERSHEY_SIMPLEX , 2, (0,0,0), 2) ##
             markAttendance(name)
 
 
