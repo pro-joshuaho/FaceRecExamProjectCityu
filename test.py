@@ -7,7 +7,7 @@ cur_path = os.path.dirname(os.path.realpath(__file__))
 
 
 with open(f'{cur_path}/info.csv', 'w', newline='') as info:
-    fieldnames = ['first_name', 'last_name', 'seat_no'] # add student code
+    fieldnames = ['full_name', 'first_name', 'last_name', 'seat_no'] # add student code
 
     csv_writer = csv.DictWriter(info, fieldnames=fieldnames, delimiter=',')
 
@@ -29,7 +29,7 @@ with open(f'{cur_path}/info.csv', 'w', newline='') as info:
         curImg = cv2.imread(f'{cur_path}/imagesAttendance/{cl}')
         full_name = os.path.splitext(cl)[0]
         first, last = full_name.split(' ')
-        line = {"first_name": first, "last_name": last, "seat_no": f'A{i}'}
+        line = {"full_name": full_name,"first_name": first, "last_name": last, "seat_no": f'A{i}'}
         i+=1
         print(line)
         csv_writer.writerow(line)

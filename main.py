@@ -1,3 +1,5 @@
+import csv
+
 import cv2
 import numpy as np
 import face_recognition
@@ -56,13 +58,23 @@ while True:
 
         matchIndex = np.argmin(faceDis)
 
-        if matches[matchIndex]:
+        if matches[matchIndex] and min(faceDis) < 0.4:
             name = classNames[matchIndex].upper()
             y1, x2, y2, x1 = faceLoc
+            print(faceDis)
+            seat_number = ''
+            with open(f'{cur_path}/info.csv', 'r', newline='') as profiles:
+                csv_reader = csv.DictReader(profiles, delimiter=',')
+                for line in csv_reader:
+                    if line['full_name'] == classNames[matchIndex]:
+                        seat_number = line['seat_no']
             # y1, x2, y2, x1 = y1*4, x2*4, y2*4, x1*4
             cv2.rectangle(img, (x1, y1), (x2, y2), (0,255,0), 2)
-            cv2.rectangle(img, (x1, y2-25), (x2, y2), (0,255,0), cv2.FILLED)
-            cv2.putText(img, name, (x1+6, y2-6), cv2.FONT_HERSHEY_COMPLEX, 0.5, (255,255,255), 2)
+            cv2.rectangle(img, (x1-150, y1-20), (x1, y2+20), (99,248,171), cv2.FILLED)
+            cv2.rectangle(img, (x1, y2-20), (x2, y2+20), (121,240,108), cv2.FILLED)
+            cv2.putText(img, name, (x1+6, y2-6), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 2)
+            cv2.putText(img, "seat #:", (x1-130, y1+20), cv2.FONT_HERSHEY_SIMPLEX , 1, (0,0,0), 2)
+            cv2.putText(img, seat_number, (x1-130, y1+70), cv2.FONT_HERSHEY_SIMPLEX , 1, (0,0,0), 2) ##
             markAttendance(name)
 
 

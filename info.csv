@@ -1,7 +1,9 @@
-first_name,last_name,seat_no
-bill,gates,A1
-elon,musk,A2
-jack,ma,A3
-Lai,Pak,A4
-Lok,Bong,A5
-Vasudev,Karunakaran,A6
+full_name,first_name,last_name,seat_no
+bill gates,bill,gates,A1
+dwayne johnson,dwayne,johnson,A2
+elon musk,elon,musk,A3
+jack ma,jack,ma,A4
+Lai Pak,Lai,Pak,A5
+Lok Bong,Lok,Bong,A6
+Mr bean,Mr,bean,A7
+Vasudev Karunakaran,Vasudev,Karunakaran,A8
