@@ -7,10 +7,11 @@ from datetime import datetime
 path = 'imagesAttendance'
 images = []
 classNames = []
-myList = os.listdir(path)
+cur_path = os.path.dirname(os.path.realpath(__file__))
+myList = os.listdir(f'{cur_path}/{path}')
 print(myList)
 for cl in myList:
-    curImg = cv2.imread(f'{path}/{cl}')
+    curImg = cv2.imread(f'{cur_path}/{path}/{cl}')
     images.append(curImg)
     classNames.append(os.path.splitext(cl)[0])
 print(classNames)
@@ -24,7 +25,7 @@ def findEncodings(images):
     return encodeList
 
 def markAttendance(name):
-    with open('Attendance.csv', 'r+') as f:
+    with open(f'{cur_path}/Attendance.csv', 'r+') as f:
         myDataList = f.readlines()
         nameList = []
         for line in myDataList:
