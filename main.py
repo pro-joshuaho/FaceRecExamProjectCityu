@@ -6,25 +6,36 @@ import face_recognition
 import os
 from datetime import datetime
 
+# from encodeImages import encodeListKnown
+
 path = 'imagesAttendance'
 images = []
 classNames = []
 cur_path = os.path.dirname(os.path.realpath(__file__))
 myList = os.listdir(f'{cur_path}/{path}')
-print(myList)
+# print(myList)
 for cl in myList:
     curImg = cv2.imread(f'{cur_path}/{path}/{cl}')
     images.append(curImg)
     classNames.append(os.path.splitext(cl)[0])
-print(classNames)
+# print(classNames)
 
-def findEncodings(images):
-    encodeList = []
-    for img in images:
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        encode = face_recognition.face_encodings(img)[0]
-        encodeList.append(encode)
-    return encodeList
+# def findEncodings(images):
+#     encodeList = []
+#     for img in images:
+#         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+#         encode = face_recognition.face_encodings(img)[0]
+#         encodeList.append(encode)
+#     return encodeList
+
+import re
+
+encodingsDoc = open(f"{cur_path}/encodingDoc.txt", "r")
+encodings = encodingsDoc.read().replace('[','').replace(']','')
+encodings = str(encodings)
+encodings = re.split('[\s]+', encodings) #split(/[\s,]+/)
+# print("\nContent in encodingsDoc.txt:\n", encodings)
+encodingsDoc.close()
 
 def markAttendance(name):
     with open(f'{cur_path}/Attendance.csv', 'r+') as f:
@@ -39,8 +50,10 @@ def markAttendance(name):
             f.writelines(f'\n{name}, {dtString}')
     #can link it to the database if have time
 
-encodeListKnown = findEncodings(images)
-print('encoding Complete', len(encodeListKnown))
+
+encodeListKnown = np.array(encodings, dtype='float64').reshape((int(len(encodings)/128),128))
+# print(encodeListKnown)            # findEncodings(images)
+# print('encoding Complete', len(encodeListKnown))
 
 cap = cv2.VideoCapture(0) # 0 is the id
 
@@ -58,11 +71,12 @@ while True:
 
         matchIndex = np.argmin(faceDis)
 
-        threshold = 0.37
+        threshold = 0.39
         if matches[matchIndex] and min(faceDis) < threshold:
             name = classNames[matchIndex].upper()
             y1, x2, y2, x1 = faceLoc
-            print(faceDis)
+            # print(faceDis, matches)
+            print(y2-y1, x2-x1)
             seat_number = ''
             subject = ''
             paper_no = ''
@@ -74,7 +88,7 @@ while True:
                         subject = line['subject']
                         paper_no = line['paper_no']
                         room = line['room']
-            y1, x2, y2, x1 = y1-20, x2+20, y2+20, x1-20
+            y1, x2, y2, x1 = y1-20, x2+20+int((108/(x2-x1))*10), y2+20+int(((120/(y2-y1)))*15), x1-20
 
             # exam_details = f'{name} {chr(10)}{subject} paper{paper_no}'
             # exam_details = chr(10).join([name, f'{subject} paper {paper_no}'])
